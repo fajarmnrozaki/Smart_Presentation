@@ -27,9 +27,9 @@ function resizeCanvasToDisplaySize(canvas) {
 
 // Creating a scene with background color
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xdcebeb);
-// 0xdcebeb = light blue
-//0xe0e4e7 = light gray
+scene.background = new THREE.Color(0xdbe9e9);
+// 0xdbe9e9 = light blue
+// 0xe0e4e7 = light gray
 
 // Plane geometry as a ground
 const geometry = new THREE.PlaneGeometry(20, 20, 8, 8);
