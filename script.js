@@ -7,24 +7,6 @@ import { GLTFLoader } from "https://unpkg.com/three@0.139.2/examples/jsm/loaders
 // import { STLLoader } from "https://unpkg.com/three@0.139.2/examples/jsm/loaders/STLLoader.js";
 // import { VRMLLoader } from "https://unpkg.com/three@0.139.2/examples/jsm/loaders/VRMLLoader.js";
 
-function resizeCanvasToDisplaySize(canvas) {
-	// Lookup the size the browser is displaying the canvas in CSS pixels.
-	const displayWidth = canvas.clientWidth;
-	const displayHeight = canvas.clientHeight;
-
-	// Check if the canvas is not the same size.
-	const needResize =
-		canvas.width !== displayWidth || canvas.height !== displayHeight;
-
-	if (needResize) {
-		// Make the canvas the same size
-		canvas.width = displayWidth;
-		canvas.height = displayHeight;
-	}
-
-	return needResize;
-}
-
 // Creating a scene with background color
 export const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xdbe9e9);
@@ -43,13 +25,10 @@ const plane = new THREE.Mesh(geometry, material);
 plane.rotateX(-Math.PI / 2);
 scene.add(plane);
 
-const camera = new THREE.PerspectiveCamera(
+export const camera = new THREE.PerspectiveCamera(
 	40,
 	myCanvas.offsetWidth / myCanvas.offsetHeight
 );
-
-// Resize canvas match the size of the screen
-resizeCanvasToDisplaySize(myCanvas);
 
 // create grid helper
 const size = 20;
@@ -102,22 +81,23 @@ renderer.setSize(myCanvas.offsetWidth, myCanvas.offsetHeight);
 
 export const orbitControls = new OrbitControls(camera, renderer.domElement);
 
-const loader = new GLTFLoader();
+export const loader = new GLTFLoader();
+loader.name = "loader";
 
 let path = "files/" + myText;
 
 loader.load(
 	path,
 	function (gltf) {
-		scene.add(gltf.scene);
+		let file3D = gltf.scene;
+		file3D.name = "file3D";
+		scene.add(file3D);
 	},
 	undefined,
 	function (error) {
 		console.error(error);
 	}
 );
-
-// orbitControls.autoRotate = true;
 
 renderer.setAnimationLoop(() => {
 	orbitControls.update();
