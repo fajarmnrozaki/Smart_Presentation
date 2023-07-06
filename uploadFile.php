@@ -1,5 +1,7 @@
 <?php
 
+include '../database/config.php';
+
 if (isset($_FILES['fileUpload'])) {
     $file_name = $_FILES['fileUpload']['name'];
     $file_size = $_FILES['fileUpload']['size'];
@@ -23,7 +25,16 @@ if (isset($_FILES['fileUpload'])) {
     }
     // $value = $file_name;
     
-    // header("Location: databases");
     exit();
 }
   
+if (isset($_GET['search'])) {
+  $search_key = $_GET['search'];
+  if($search_key == "") {
+    header("Location: databases");
+    exit();
+  }else{
+    header("Location: databases?search=" . urldecode($search_key));
+  }
+  exit();
+}
